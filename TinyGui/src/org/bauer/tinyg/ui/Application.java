@@ -1,5 +1,6 @@
 package org.bauer.tinyg.ui;
 
+import org.bauer.tinyg.ui.components.MainPanel;
 import org.bauer.tinyg.ui.graphics.Images;
 import org.bauer.tinyg.ui.pages.ConnectPage;
 import org.eclipse.swt.SWT;
@@ -60,9 +61,10 @@ public class Application {
 		shell.setLayout(stack);
 		
 		Composite connect = new ConnectPage(shell, SWT.NONE);
+		Composite main = new MainPanel(shell, SWT.BORDER);
 //		comp.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		
-		stack.topControl = connect;
+		stack.topControl = main;
 		
 	}
 

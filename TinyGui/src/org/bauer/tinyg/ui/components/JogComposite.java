@@ -1,6 +1,8 @@
 package org.bauer.tinyg.ui.components;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.SWT;
 
 public class JogComposite extends Composite {
 
@@ -11,6 +13,10 @@ public class JogComposite extends Composite {
 	 */
 	public JogComposite(Composite parent, int style) {
 		super(parent, style);
+		
+		Label lblJog = new Label(this, SWT.NONE);
+		lblJog.setBounds(215, 132, 55, 15);
+		lblJog.setText("JOG");
 
 	}
 

@@ -11,7 +11,7 @@ public class TabStrip extends Composite {
 	
 	private String[] tabs;
 	private int selection = 0;
-	private int spacing = 6;
+	private int spacing = 15;
 	private int linewidth = 3;
 	private int linespace = 3;
 	
@@ -45,7 +45,7 @@ public class TabStrip extends Composite {
 					e.gc.drawString(tabs[i], tx, texth, true);
 					
 					if (selection == i) {
-						e.gc.drawRectangle(startx, liney, tabwidth, linewidth);
+						e.gc.fillRectangle(startx, liney, tabwidth, linewidth);
 					}
 				}
 
