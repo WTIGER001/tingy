@@ -1,0 +1,18 @@
+# Sample
+
+# List Serial Ports
+list
+
+# Connect to the named serial port
+connect COM3
+
+# Send GCode
+<Gcode>
+
+
+#send GCODE File
+run <FILENAME>
+# Prints out the GCODE BUFFER and shows what the current progress is.
+
+
+
