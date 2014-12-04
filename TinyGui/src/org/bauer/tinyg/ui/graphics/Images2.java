@@ -146,8 +146,8 @@ public enum Images2 {
 	keyboard("11_hardware_keyboard","ic_action_keyboard"),
 	mouse("11_hardware_mouse","ic_action_mouse"),
 	phone("11_hardware_phone","ic_action_phone"),
-	and_states_error("12_alerts_and_states_error","ic_action_and_states_error"),
-	and_states_warning("12_alerts_and_states_warning","ic_action_and_states_warning"),
+	error("12_alerts_and_states_error","ic_action_error"),
+	warning("12_alerts_and_states_warning","ic_action_warning"),
 	about("13_extra_actions_about","ic_action_about"),
 	help("13_extra_actions_help","ic_action_help"),
 	settings("13_extra_actions_settings","ic_action_settings"),
@@ -193,6 +193,9 @@ public enum Images2 {
 			return old;
 		}
 		InputStream in = getClass().getResourceAsStream(fullpath);
+		if (in == null) {
+			throw new Error("BAD CONFIG FOR " + fullpath);
+		}
 		ImageData data  = new ImageLoader().load(in)[0];
 		return new Image(Display.getCurrent(), data);
 	}

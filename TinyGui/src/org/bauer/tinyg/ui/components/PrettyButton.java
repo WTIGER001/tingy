@@ -1,5 +1,6 @@
 package org.bauer.tinyg.ui.components;
 
+import org.bauer.tinyg.ui.Resources;
 import org.bauer.tinyg.ui.graphics.Images;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -15,6 +16,9 @@ public class PrettyButton extends Button {
 	
 	public PrettyButton(Composite arg0, int arg1) {
 		super(arg0, arg1);
+		
+		setFont(Resources.LargeBold());
+		setForeground(Resources.fontForeground());
 		
 		addPaintListener(new PaintListener() {
 			@Override

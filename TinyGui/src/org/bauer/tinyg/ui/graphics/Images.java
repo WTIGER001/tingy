@@ -7,8 +7,17 @@ import org.eclipse.swt.widgets.Display;
 
 public enum Images {
 	CARBON_BACKROUND("carbon.png"),
+	BG1("bg1.png"),
+	BG2("bg2.png"),
+	PAPER_BACKROUND("background.jpg"),
 	USB("ic_action_usb.png"),
-	
+	UP("up.png"),
+	LEFT("left.png"),
+	DOWN("down.png"),
+	RIGHT("right.png"),
+	PLUS("plus.png"),
+	MINUS("minus.png"),
+	Document("ic_action_document.png")
 	;
 	private String name;
 	private Image image = null;

@@ -1,11 +1,14 @@
 package org.bauer.tinyg.ui.components;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 
 public class TabStrip extends Composite {
 	
@@ -31,13 +34,13 @@ public class TabStrip extends Composite {
 				int w = getBounds().width;
 				int h = getBounds().height;
 				int texth = spacing;
-				int tabwidth = w / 2;
+				int tabwidth = w / tabs.length;
 				int liney =  getFont().getFontData()[0].getHeight() + spacing + spacing;
 				
 				for (int i=0; i<tabs.length; i++ ) {
 					// Draw the tab
 					int startx = i*tabwidth;
-					int centerx = startx + tabwidth/2;
+					int centerx = startx + tabwidth/ 2;
 					
 					Point extents = e.gc.stringExtent(tabs[i]);
 					int tx = centerx  - extents.x/2;
@@ -53,7 +56,20 @@ public class TabStrip extends Composite {
 		});
 		
 		addMouseListener(new MouseAdapter() {
-			
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				int tabwidth = getBounds().width / tabs.length;
+				int index = arg0.x /tabwidth;
+				selection = index;
+				redraw();
+				
+				Event e = new Event();
+				e.widget = TabStrip.this;
+				e.type = SWT.Selection;
+				e.index = index;
+				
+				notifyListeners(SWT.Selection, e);
+			}
 		});
 	}
 	
@@ -80,4 +96,7 @@ public class TabStrip extends Composite {
 		return (new Point(w,h));
 	}
 
+	public int getSelection() {
+		return selection;
+	}
 }

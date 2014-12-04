@@ -1,5 +1,7 @@
 package org.bauer.tinyg.ui.components;
 
+import org.bauer.tinyg.ui.Resources;
+import org.bauer.tinyg.ui.graphics.Images2;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
@@ -20,21 +22,35 @@ public class Controls extends Composite {
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		composite.setLayout(new GridLayout(4, false));
+		composite.setLayout(new GridLayout(1, false));
 		
-		Label lblNewLabel = new Label(composite, SWT.NONE);
-		lblNewLabel.setImage(SWTResourceManager.getImage("C:\\Users\\John\\git\\tingy\\TinyGui\\src\\org\\bauer\\tinyg\\ui\\graphics\\holo_dark\\09_media_replay\\drawable-xxhdpi\\ic_action_replay.png"));
-		lblNewLabel.setBounds(0, 0, 55, 15);
+//		ImageButton btnReset = new ImageButton(composite, SWT.NULL);
+//		btnReset.setImage(Images2.replay.getxxHdpi());
+//		btnReset.setHoverImage(Images2.accept.getxxHdpi());
+//		
+//		ImageButton btnPlay = new ImageButton(composite, SWT.NULL);
+//		btnPlay.setImage(Images2.play.getxxHdpi());
+//		btnPlay.setHoverImage(Images2.accept.getxxHdpi());
+//		
+//		ImageButton btnPause = new ImageButton(composite, SWT.NULL);
+//		btnPause.setImage(Images2.pause.getxxHdpi());
+//		btnPause.setHoverImage(Images2.accept.getxxHdpi());
+//		
+//		ImageButton btnStop = new ImageButton(composite, SWT.NULL);
+//		btnStop.setImage(Images2.stop.getxxHdpi());
+//		btnStop.setHoverImage(Images2.accept.getxxHdpi());
 		
-		Label label_1 = new Label(composite, SWT.NONE);
-		label_1.setImage(SWTResourceManager.getImage("C:\\Users\\John\\git\\tingy\\TinyGui\\src\\org\\bauer\\tinyg\\ui\\graphics\\holo_dark\\09_media_play\\drawable-xxhdpi\\ic_action_play.png"));
+		ImageButton btnStop = new ImageButton(composite, SWT.NULL);
+		btnStop.setToolTipText("Emergency Stop");
+		btnStop.setImage(Images2.error.getxxHdpi());
+		btnStop.setScale(2.0f);
+		btnStop.setLayoutData(new GridData(SWT.CENTER, SWT.BEGINNING, false, false));
 		
-		Label label_2 = new Label(composite, SWT.NONE);
-		label_2.setImage(SWTResourceManager.getImage("C:\\Users\\John\\git\\tingy\\TinyGui\\src\\org\\bauer\\tinyg\\ui\\graphics\\holo_dark\\09_media_pause\\drawable-xxhdpi\\ic_action_pause.png"));
-		
-		Label label = new Label(composite, SWT.NONE);
-		label.setImage(SWTResourceManager.getImage("C:\\Users\\John\\git\\tingy\\TinyGui\\src\\org\\bauer\\tinyg\\ui\\graphics\\holo_dark\\09_media_stop\\drawable-xxhdpi\\ic_action_stop.png"));
-
+		Label l = new Label(composite, SWT.NULL);
+		l.setFont(Resources.mediumFont());
+		l.setForeground(Resources.fontForeground());
+		l.setText("Emergency Stop!");
+		l.setLayoutData(new GridData(SWT.CENTER, SWT.BEGINNING, false, false));
 	}
 
 	@Override

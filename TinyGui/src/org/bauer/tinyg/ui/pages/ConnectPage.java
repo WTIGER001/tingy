@@ -77,6 +77,7 @@ public class ConnectPage extends Composite {
 	}
 	
 	private void createFooter(Composite area, boolean empty) {
+			
 		Label lblNewLabel = new Label(area, SWT.WRAP | SWT.CENTER);
 		GridData gd_lblNewLabel = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_lblNewLabel.widthHint = 441;
