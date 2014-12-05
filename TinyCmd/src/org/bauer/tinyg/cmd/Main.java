@@ -2,8 +2,6 @@ package org.bauer.tinyg.cmd;
 
 import java.util.Scanner;
 
-import org.bauer.tingy.TinyG;
-
 public class Main {
 	private static String prompt = "TinyG> ";
 	private static Commands commands = new Commands();
@@ -17,7 +15,7 @@ public class Main {
 		System.out.println("Welcome to the TinyG Command line. type 'help' for command help.");
 
 		// Initialize the tiny g threads
-		TinyG.init();
+		org.bauer.tingy.TinyG.instance().init();
 
 		CommandContext ctx = new CommandContext();
 

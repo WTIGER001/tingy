@@ -2,7 +2,6 @@ package org.bauer.tinyg.cmd.commands;
 
 import java.io.PrintStream;
 
-
 import org.bauer.tingy.TinyG;
 import org.bauer.tinyg.cmd.ICommand;
 import org.bauer.tinyg.cmd.ICommandContext;
@@ -27,7 +26,7 @@ public class ListPorts implements ICommand{
 		}
 		
 		PrintStream out = context.getOutputStream();
-		String[] ports = TinyG.listPorts();
+		String[] ports = TinyG.instance().getPorts();
 		
 		if (ports.length == 0 ) {
 			out.println("There are no available Serial ports... Please see TinyG documentation to fix this");

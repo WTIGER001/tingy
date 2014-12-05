@@ -21,7 +21,7 @@ public class Jog implements ICommand{
 	
 	@Override
 	public void exec(String[] args, ICommandContext context) throws InvalidCommandException {
-		if (TinyG.isConnected() == false) {
+		if (TinyG.instance().getConnectedPort() != null) {
 			throw new InvalidCommandException("Must be connected to a TinyG Serial Port");
 		}
 		

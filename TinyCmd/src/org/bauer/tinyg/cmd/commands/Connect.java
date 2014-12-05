@@ -2,8 +2,6 @@ package org.bauer.tinyg.cmd.commands;
 
 import java.io.PrintStream;
 
-
-
 import org.bauer.tingy.TinyG;
 import org.bauer.tinyg.cmd.ICommand;
 import org.bauer.tinyg.cmd.ICommandContext;
@@ -29,7 +27,7 @@ public class Connect implements ICommand{
 		PrintStream out = context.getOutputStream();
 		String port = args[1];
 		try {
-			TinyG.connect(port);
+			TinyG.instance().connect(port);
 			out.println(">>> Connected to " + port);
 			out.flush();
 		} catch (Exception e) {

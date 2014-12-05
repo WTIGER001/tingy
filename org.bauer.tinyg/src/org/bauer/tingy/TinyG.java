@@ -1,48 +1,30 @@
 package org.bauer.tingy;
 
-
+import org.bauer.tingy.internal.RealTinyG;
+import org.bauer.tingy.mock.MockTinyG;
 
 public class TinyG {
+	private static Holder instanceHolder = new Holder();
+	public TinyG() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static ITinyG instance() {
+		return instanceHolder.INSTANCE;
+	}
 	
-	private static SerialDriver serialDriver = SerialDriver.getInstance();
 	
-	private static TinygDriver tg = TinygDriver.getInstance();
-	
-	public static void init() {
-		Thread serialWriterThread = new Thread(tg.serialWriter);
-		serialWriterThread.setName("Serial Writer");
-		serialWriterThread.setDaemon(true);
-		serialWriterThread.start();
+	private static class Holder {
+		private ITinyG INSTANCE;
 		
-		Thread threadResponseParser = new Thread(tg.resParse);
-		threadResponseParser.setDaemon(true);
-		threadResponseParser.setName("Response Parser");
-		threadResponseParser.start();
+		private Holder() {
+			boolean mock = System.getProperties().containsKey("org.bauer.tinyg.MOCK");;
+			if (mock) {
+				INSTANCE = new MockTinyG();
+			} else {
+				INSTANCE = new RealTinyG();
+			}
+			INSTANCE.init();
+		}
 	}
-	
-	public static String[] listPorts() {
-		return SerialDriver.listSerialPorts();
-	}
-	
-	public static boolean connect(String port) throws Exception {
-		return serialDriver.initialize(port, 115200);
-	}
-	
-	public static void disconnect() throws Exception {
-		serialDriver.disconnect();
-	}
-	
-	public static void sendCmd(String cmd) throws Exception  {
-		serialDriver.write(cmd);
-	}
-
-	public static String getPort() {
-		return "TODO";
-	}
-
-	public static boolean isConnected() {
-		return true;
-	}
-	
-	
 }

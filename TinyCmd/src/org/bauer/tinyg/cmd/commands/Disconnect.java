@@ -2,8 +2,6 @@ package org.bauer.tinyg.cmd.commands;
 
 import java.io.PrintStream;
 
-
-
 import org.bauer.tingy.TinyG;
 import org.bauer.tinyg.cmd.ICommand;
 import org.bauer.tinyg.cmd.ICommandContext;
@@ -26,10 +24,12 @@ public class Disconnect implements ICommand{
 		
 		PrintStream out = context.getOutputStream();
 		try {
-			String port = TinyG.getPort();
-			TinyG.disconnect();
-			out.println(">>> Disconnected from " + port);
-			out.flush();
+			String port = TinyG.instance().getConnectedPort();
+			if (port != null){
+				TinyG.instance().disconnect();
+				out.println(">>> Disconnected from " + port);
+				out.flush();
+			}
 		} catch (Exception e) {
 			throw new InvalidCommandException(e.getMessage());
 		}
