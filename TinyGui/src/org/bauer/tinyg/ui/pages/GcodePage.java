@@ -5,6 +5,7 @@ import org.bauer.tinyg.ui.components.GCodeControls;
 import org.bauer.tinyg.ui.components.ImageButton;
 import org.bauer.tinyg.ui.graphics.Images2;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -12,8 +13,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 
-public class GcodePage extends Composite {
+public class GcodePage extends Composite implements IPage {
 
+	@Override
+	public Image image() {
+		return Images2.cast.getxHdpi();
+	}
+	
+	@Override
+	public String name() {
+		return "G Code";
+	}
+	
 	/**
 	 * Create the composite.
 	 * @param parent

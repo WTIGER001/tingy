@@ -1,5 +1,8 @@
 package org.bauer.tinyg.ui.pages;
 
+import org.bauer.tingy.ITinyGActionListener;
+import org.bauer.tingy.TinyG;
+import org.bauer.tingy.TinyGAction;
 import org.bauer.tinyg.ui.Resources;
 import org.bauer.tinyg.ui.components.ImageButton;
 import org.bauer.tinyg.ui.graphics.Images;
@@ -12,6 +15,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -27,7 +31,7 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class MainView extends Composite {
-
+	private Buttons buttons;
 	private StackLayout stack;
 	private Composite pageHolder;
 	private ConnectPage connectPage;
@@ -55,8 +59,8 @@ public class MainView extends Composite {
 		setLayout(layout);
 		
 		// Buttons at top
-		Buttons buttonBar = new Buttons(this, SWT.NULL);
-		buttonBar.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+		buttons = new Buttons(this, SWT.NULL);
+		buttons.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 		
 		pageHolder = new Composite(this, SWT.NULL);
 		pageHolder.setLayoutData(new GridData(SWT.FILL,  SWT.FILL, true, true));
@@ -70,10 +74,24 @@ public class MainView extends Composite {
 		reportsPage = new ReportsPage(pageHolder, SWT.NONE);
 		settingsPage = new SettingsPage(pageHolder, SWT.NULL);
 		
-		stack.topControl = jogPage;
+		showPage(connectPage);
+		
+		buttons.btnDisconnect.setVisible(false);
+		buttons.btnGCode.setVisible(false);
+		buttons.btnJog.setVisible(false);
+		buttons.btnReports.setVisible(false);
+		buttons.btnSettings.setVisible(false);
+		
+		TinyG.instance().addListener(new HandleConnectDisconnect(), TinyGAction.Connect, TinyGAction.Disconnect);
 		
 	}
 
+	private void showPage(IPage page) {
+		buttons.title.setText(page.name());
+		stack.topControl = (Control) page;
+		pageHolder.layout();
+	}
+	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
@@ -83,6 +101,13 @@ public class MainView extends Composite {
 	class Buttons extends Composite {
 
 		private Label title;
+		private ImageButton btnExit;
+		private ImageButton btnFullScreen;
+		private ImageButton btnDisconnect;
+		private ImageButton btnSettings;
+		private ImageButton btnReports;
+		private ImageButton btnJog;
+		private ImageButton btnGCode;
 
 		/**
 		 * Create the composite.
@@ -111,28 +136,28 @@ public class MainView extends Composite {
 			composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 			composite.setLayout(gdInner);
 			
-			final ImageButton btnGCode = new ImageButton(composite, SWT.NULL);
+			btnGCode = new ImageButton(composite, SWT.NULL);
 			btnGCode.setImage(Images2.cast.getxHdpi());
 			btnGCode.setToolTipText("G-Code");
 			
-			final ImageButton btnJog = new ImageButton(composite, SWT.NULL);
+			btnJog = new ImageButton(composite, SWT.NULL);
 			btnJog.setImage(Images2.gamepad.getxHdpi());
 			btnJog.setToolTipText("Manual Control");
 			
-			final ImageButton btnReports = new ImageButton(composite, SWT.NULL);
+			btnReports = new ImageButton(composite, SWT.NULL);
 			btnReports.setImage(Images.Document.getImage());
 			btnReports.setToolTipText("Reports");
 			
 			
-			final ImageButton btnSettings = new ImageButton(composite, SWT.NULL);
+			btnSettings = new ImageButton(composite, SWT.NULL);
 			btnSettings.setImage(Images2.settings.getxHdpi());
 			btnSettings.setToolTipText("Settings");
 			
-			final ImageButton btnDisconnect = new ImageButton(composite, SWT.NULL);
+			btnDisconnect = new ImageButton(composite, SWT.NULL);
 			btnDisconnect.setImage(Images2.usb.getxHdpi());
 			btnDisconnect.setToolTipText("Disconnect");
 			
-			final ImageButton btnFullScreen = new ImageButton(composite, SWT.NULL);
+			btnFullScreen = new ImageButton(composite, SWT.NULL);
 			if (getShell().getFullScreen()) {
 				btnFullScreen.setImage(Images2.full_screen.getxHdpi());
 				btnFullScreen.setToolTipText("Full Screen");
@@ -142,7 +167,7 @@ public class MainView extends Composite {
 			}
 			
 			
-			final ImageButton btnExit = new ImageButton(composite, SWT.NULL);
+			btnExit = new ImageButton(composite, SWT.NULL);
 			btnExit.setImage(Images2.cancel.getxHdpi());
 			btnExit.setToolTipText("Exit");
 			
@@ -156,15 +181,7 @@ public class MainView extends Composite {
 			btnDisconnect.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event event) {
-					btnDisconnect.setVisible(false);
-					btnGCode.setVisible(false);
-					btnJog.setVisible(false);
-					btnReports.setVisible(false);
-					btnSettings.setVisible(false);
-					
-					title.setText("Connect to TinyG");
-					stack.topControl = connectPage;
-					pageHolder.layout();
+					TinyG.instance().disconnect();
 				}
 			});
 			
@@ -174,33 +191,28 @@ public class MainView extends Composite {
 					title.setText("Manual Controls");
 					stack.topControl = jogPage;
 					pageHolder.layout();
+					showPage(jogPage);
 				}
 			});
 			
 			btnGCode.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event event) {
-					title.setText("G-Code Exection");
-					stack.topControl = gcodePage;
-					pageHolder.layout();
+					showPage(gcodePage);
 				}
 			});
 			
 			btnSettings.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event event) {
-					title.setText("Settings");
-					stack.topControl = settingsPage;
-					pageHolder.layout();
+					showPage(settingsPage);
 				}
 			});			
 			
 			btnReports.addListener(SWT.Selection, new Listener() {
 				@Override
 				public void handleEvent(Event event) {
-					title.setText("Reports");
-					stack.topControl = reportsPage;
-					pageHolder.layout();
+					showPage(reportsPage);
 				}
 			});		
 			
@@ -227,4 +239,31 @@ public class MainView extends Composite {
 			// Disable the check that prevents subclassing of SWT components
 		}
 	}
+	
+	class HandleConnectDisconnect implements ITinyGActionListener {
+
+		@Override
+		public void actionPerformed(TinyGAction action, Object data) {
+			if (action == TinyGAction.Connect) {
+				buttons.btnDisconnect.setVisible(true);
+				buttons.btnGCode.setVisible(true);
+				buttons.btnJog.setVisible(true);
+				buttons.btnReports.setVisible(true);
+				buttons.btnSettings.setVisible(true);
+				
+				showPage(jogPage);
+				
+			} else if (action == TinyGAction.Disconnect) {
+				buttons.btnDisconnect.setVisible(false);
+				buttons.btnGCode.setVisible(false);
+				buttons.btnJog.setVisible(false);
+				buttons.btnReports.setVisible(false);
+				buttons.btnSettings.setVisible(false);
+				
+				showPage(connectPage);
+			}
+		}
+		
+	}
+	
 }

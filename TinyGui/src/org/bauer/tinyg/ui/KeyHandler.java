@@ -18,7 +18,7 @@ public class KeyHandler {
 				Commands cmd = Commands.find(event.keyCode, event.stateMask);
 				
 				if (cmd != null) {
-					CommandService.instance().runCommand(cmd, event);
+					CommandService.instance().runCommand(cmd, null,  event);
 				}
 			}
 		});

@@ -14,7 +14,7 @@ public class JogXDecrement implements ICommand {
 	}
 	
 	@Override
-	public void run(Event e) {
+	public void run(String data, Event e) {
 		System.out.println("JOG ");
 	}
 

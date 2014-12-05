@@ -4,9 +4,8 @@ import org.eclipse.swt.SWT;
 
 public enum Commands {
 	Exit("Exit", 'q', "Exit"),
-	JogXDecrement("Jog X - Down", SWT.ARROW_DOWN, "Jogs the X axis down by the current increment"),
-		
-	
+	JogXDecrement("Jog X - Down", SWT.ARROW_DOWN, "Jogs the X axis down by the current increment"), 
+	Connect("Connect", -1, "Connect to the serial port"),
 	
 	;
 	String label;

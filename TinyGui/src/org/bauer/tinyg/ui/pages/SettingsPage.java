@@ -5,14 +5,26 @@ import org.bauer.tinyg.ui.components.AxisSettingsComposite;
 import org.bauer.tinyg.ui.components.MotorSettingsComposite;
 import org.bauer.tinyg.ui.components.TabFolder;
 import org.bauer.tinyg.ui.components.TabStrip;
+import org.bauer.tinyg.ui.graphics.Images2;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-public class SettingsPage extends Composite {
+public class SettingsPage extends Composite implements IPage {
+
+	@Override
+	public Image image() {
+		return Images2.settings.getxHdpi();
+	}
+	
+	@Override
+	public String name() {
+		return "Settings";
+	}
 
 	private Composite tabArea;
 	private StackLayout tabStack;

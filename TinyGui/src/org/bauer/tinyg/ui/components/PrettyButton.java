@@ -1,18 +1,26 @@
 package org.bauer.tinyg.ui.components;
 
 import org.bauer.tinyg.ui.Resources;
-import org.bauer.tinyg.ui.graphics.Images;
+import org.bauer.tinyg.ui.command.CommandService;
+import org.bauer.tinyg.ui.command.Commands;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 public class PrettyButton extends Button {
 	private boolean down = false;
+	private String text = null;
+	private Commands cmd;
+	private String cmdData;
 	
 	public PrettyButton(Composite arg0, int arg1) {
 		super(arg0, arg1);
@@ -85,4 +93,28 @@ public class PrettyButton extends Button {
 		
 	}
 
+	@Override
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	@Override
+	public String getText() {
+		return text;
+	}
+	
+	public void bind(Commands cmd) {
+		bind(cmd, null);
+	}
+
+	public void bind(Commands cmd, String data) {
+		this.cmdData = data;
+		this.cmd = cmd;
+		addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				CommandService.instance().runCommand(cmd, data, event);
+			}
+		});
+	}
 }

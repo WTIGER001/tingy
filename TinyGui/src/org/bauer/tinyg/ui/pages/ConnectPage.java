@@ -1,12 +1,15 @@
 package org.bauer.tinyg.ui.pages;
 
+import org.bauer.tingy.TinyG;
 import org.bauer.tinyg.ui.Resources;
+import org.bauer.tinyg.ui.command.Commands;
 import org.bauer.tinyg.ui.components.PrettyButton;
 import org.bauer.tinyg.ui.graphics.Images;
 import org.bauer.tinyg.ui.graphics.Images2;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -15,7 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-public class ConnectPage extends Composite {
+public class ConnectPage extends Composite implements IPage {
 	Composite area ;
 	/**
 	 * Create the composite.
@@ -32,6 +35,16 @@ public class ConnectPage extends Composite {
 		
 		build();
 	}	
+	
+	@Override
+	public Image image() {
+		return Images2.usb.getxHdpi();
+	}
+	
+	@Override
+	public String name() {
+		return "Connect to TinyG";
+	}
 	
 	private void build() {
 		// Dispose all the children of area
@@ -55,11 +68,11 @@ public class ConnectPage extends Composite {
 	}
 	
 	private String[] getPorts() {
-		return new String[] { "COM3", "COM4" };
+		return TinyG.instance().getPorts();
 	}
 	
 	private void createPortButton(String port, Composite area) {
-		final Button btnNewButton = new PrettyButton(area, SWT.PUSH);
+		final PrettyButton btnNewButton = new PrettyButton(area, SWT.PUSH);
 		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
 		btnNewButton.setAlignment(SWT.LEFT);
 		btnNewButton.setImage(null);
@@ -68,6 +81,7 @@ public class ConnectPage extends Composite {
 		gd_btnNewButton.heightHint = 75;
 		btnNewButton.setLayoutData(gd_btnNewButton);
 		btnNewButton.setText(port);
+		btnNewButton.bind(Commands.Connect, port);
 	}
 	
 	private void createHeader(Composite area) {

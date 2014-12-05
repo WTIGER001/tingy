@@ -4,5 +4,5 @@ import org.eclipse.swt.widgets.Event;
 
 public interface ICommand {
 	public Commands getCommand();
-	public void run(Event e);
+	public void run(String data, Event e);
 }

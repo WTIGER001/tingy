@@ -2,8 +2,10 @@ package org.bauer.tinyg.ui.pages;
 
 import org.bauer.tinyg.ui.Resources;
 import org.bauer.tinyg.ui.components.JogComposite;
+import org.bauer.tinyg.ui.graphics.Images2;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -13,7 +15,17 @@ import org.eclipse.swt.widgets.Label;
 /**
  * Main Panel for the controls. T
  */
-public class JogPage extends Composite {
+public class JogPage extends Composite  implements IPage {
+
+	@Override
+	public Image image() {
+		return Images2.gamepad.getxHdpi();
+	}
+	
+	@Override
+	public String name() {
+		return "Manual Controls";
+	}
 	
 	/**
 	 * Create the composite.

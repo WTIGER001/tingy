@@ -10,13 +10,14 @@ public class CommandService extends Observable{
 	private Map<Commands, ICommand> commandMap = new HashMap<Commands, ICommand>();
 	public CommandService() {
 		add(new JogXDecrement());
+		add(new Connect());
 	}
 	
 	private void add(ICommand cmd) {
 		commandMap.put(cmd.getCommand(), cmd);
 	}
 	
-	public void runCommand(Commands cmd, Event e) {
+	public void runCommand(Commands cmd, String data, Event e) {
 		// Get the implementation
 		ICommand cmdImpl = commandMap.get(cmd);
 		
@@ -24,9 +25,9 @@ public class CommandService extends Observable{
 			throw new IllegalArgumentException("No Command Implementation for " + cmd.getLabel() + " exists");
 		}
 		
-		notifyObservers( new CommandEvent(0, cmd));
-		cmdImpl.run(e);
-		notifyObservers( new CommandEvent(1, cmd));
+		notifyObservers( new CommandEvent(0, cmd, data));
+		cmdImpl.run(data, e);
+		notifyObservers( new CommandEvent(1, cmd, data));
 	}
 	
 	public static CommandService instance() {
